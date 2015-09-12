@@ -38,7 +38,7 @@ public class Livro implements Serializable{
 	@Column(name="genero_livro")
 	private String genero;
 
-	public long getIdLivro() {
+	public Long getIdLivro() {
 		return idLivro;
 	}
 
