@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+	</h:head>
+	<title>CRUD com Hibernate e JSF usando Eclipse e Banco de Dados	PostGres</title>
+	<h:body>
+		<f:view>
+			<div align="center">
+				<h:form id="form">
+					<h:messages />
+					<p:dataTable var="item" value="#{LivroMB.livros}" border="1"
+						cellpadding="1" cellspacing="1"	rendered="#{LivroMB.livros.rowCount > 0}">
+						<f:facet name="header">
+							<p:outputLabel value="Relação de Livros Cadastrados" />
+						</f:facet>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Titulo" />
+							</f:facet>
+							<h:outputText value="#{item.titulo}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Editora" />
+							</f:facet>
+							<h:outputText value="#{item.editora}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Autor" />
+							</f:facet>
+							<h:outputText value="#{item.autor}" />
+						</p:column>
+						<p:column rendered="#{!LivroMB.exibirForm}">
+							<f:facet name="header">
+								<h:outputText value="Opções" />
+							</f:facet>
+							<h:commandLink action="#{LivroMB.alterarLivro}">
+								<h:outputText value="Alterar" />
+								<f:setPropertyActionListener value="#{item}" target="#{LivroMB.livro}" />
+							</h:commandLink> 
+							<h:commandLink action="#{LivroMB.excluirLivro}">
+								<h:outputText value="Excluir" />
+								<f:setPropertyActionListener value="#{item}" target="#{LivroMB.livro}" />
+							</h:commandLink>
+						</p:column>
+						<f:facet name="footer">
+							<h:outputText value="Quantidade de livros cadastrados: #{LivroMB.livros.rowCount}" />
+						</f:facet>
+					</p:dataTable>
+					
+					<h:commandLink action="#{LivroMB.adicionarLivro}" value="Novo livro"
+						rendered="#{!LivroMB.exibirForm}" />
+					
+					<!-- Inicio: Formulario de Cadastro de livro -->
+					<p:panelGrid border="1" columns="2" rendered="#{LivroMB.exibirForm}">
+						<f:facet name="header">
+							<h:outputText value="Cadastro de livro" />
+						</f:facet>
+						<p:outputLabel for="nome" value="Titulo: " />
+						<p:inputText id="nome" value="#{LivroMB.livro.titulo}"
+							required="true" />
+						<p:outputLabel for="email" value="Editora: " />
+						<p:inputText id="email" value="#{LivroMB.livro.editora}"
+							required="true" />
+						<p:outputLabel for="autor" value="Autor: " />
+						<p:inputText id="autor" value="#{LivroMB.livro.autor}"
+							required="true" redisplay="true" />
+						<f:facet name="footer">
+							<h:panelGroup>
+								<h:commandButton value="Salvar" action="#{LivroMB.salvarLivro}" />
+								<h:commandButton value="Cancelar"
+									action="#{LivroMB.cancelarCadastroLivro}" immediate="true" />
+							</h:panelGroup>
+						</f:facet>
+					</p:panelGrid>
+				</h:form>
+			</div>
+		</f:view>
+	</h:body>
+</html>
